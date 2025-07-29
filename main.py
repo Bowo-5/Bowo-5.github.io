@@ -5,14 +5,14 @@ from pyspark.sql.types import IntegerType, FloatType, DateType
 # Initialize SparkSession
 spark = SparkSession.builder \
     .appName("MongoDB to PySpark") \
-    .config("spark.mongodb.input.uri", "mongodb+srv://tmp-dta-st-1:Uoe3GROXyB4wXxox@cluster0-qov8h.mongodb.net/analytics_test.accounts") \
-    .config("spark.mongodb.output.uri", "mongodb+srv://tmp-dta-st-1:Uoe3GROXyB4wXxox@cluster0-qov8h.mongodb.net/analytics_test") \
+    .config("spark.mongodb.input.uri", "mongodb+srv://analytics_test.accounts") \
+    .config("spark.mongodb.output.uri", "mongodb+srv://tt/analytics_test") \
     .getOrCreate()
 
 # Load data from MongoDB
-accounts_df = spark.read.format("mongo").option("uri", "mongodb+srv://tmp-dta-st-1:Uoe3GROXyB4wXxox@cluster0-qov8h.mongodb.net/analytics_test.accounts").load()
-customers_df = spark.read.format("mongo").option("uri", "mongodb+srv://tmp-dta-st-1:Uoe3GROXyB4wXxox@cluster0-qov8h.mongodb.net/analytics_test.customers").load()
-transactions_df = spark.read.format("mongo").option("uri", "mongodb+srv://tmp-dta-st-1:Uoe3GROXyB4wXxox@cluster0-qov8h.mongodb.net/analytics_test.transactions").load()
+accounts_df = spark.read.format("mongo").option("uri", "mongodb+srv:///analytics_test.accounts").load()
+customers_df = spark.read.format("mongo").option("uri", "mongodb+srv:///analytics_test.customers").load()
+transactions_df = spark.read.format("mongo").option("uri", "mongodb+srv/analytics_test.transactions").load()
 
 # Convert data types
 transactions_df = transactions_df.withColumn("transaction_amount", transactions_df["transaction_amount"].cast(FloatType()))
